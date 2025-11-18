@@ -30,9 +30,9 @@ function Navbar() {
               </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">
-                About
-              </a>
+              <Link className="nav-link" to={"/register"}>
+                Register
+              </Link>
             </li>
             <li className="nav-item">
               <a className="nav-link" href="#">
