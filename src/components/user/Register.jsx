@@ -9,8 +9,16 @@ function Register() {
   } = useForm();
 
   const onSubmit = (data) => {
-    alert("form submitted");
+    console.log(data, errors);
+    fetch("http://localhost:8080/users/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
   };
+
   return (
     <div class="d-flex justify-content-center align-items-center">
       <div class="row shadow rounded overflow-hidden">
@@ -33,7 +41,9 @@ function Register() {
                 type="text"
                 class="form-control"
                 placeholder="Enter your name"
+                {...register("name", { required: "Name is required" })}
               />
+              <p>{errors.name && errors.name.message}</p>
             </div>
 
             <div class="mb-3">
@@ -42,6 +52,7 @@ function Register() {
                 type="email"
                 class="form-control"
                 placeholder="Enter email"
+                {...register("email")}
               />
             </div>
 
@@ -51,6 +62,7 @@ function Register() {
                 type="password"
                 class="form-control"
                 placeholder="Enter password"
+                {...register("password")}
               />
             </div>
 
@@ -60,6 +72,7 @@ function Register() {
                 type="password"
                 class="form-control"
                 placeholder="Enter password"
+                {...register("confirmPassword")}
               />
             </div>
 
@@ -69,6 +82,7 @@ function Register() {
                 type="number"
                 class="form-control"
                 placeholder="Enter password"
+                {...register("age")}
               />
             </div>
 
