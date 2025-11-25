@@ -4,10 +4,40 @@ function Menu() {
   const [menu, setMenu] = useState(null);
   const [categories, setCategories] = useState(null);
 
-  const fetchMenu = () => {
-    fetch("http://localhost:8080/products")
-      .then((res) => res.json())
-      .then((data) => setMenu(data));
+  const fetchMenu = (choice, payload) => {
+    if (choice) {
+      switch (choice) {
+        case "BETWEEN":
+          fetch(
+            `http://localhost:8080/product/search/findByPriceBetween?sp=${payload.sp}&ep=${payload.ep}`
+          )
+            .then((res) => res.json())
+            .then((data) => setMenu(data._embedded.products))
+            .catch((error) => console.log(error));
+          break;
+        case "SORT-BY-PRICE":
+          if (payload.order == "ASC") {
+            fetch("http://localhost:8080/product/search/findByOrderByPriceAsc")
+              .then((res) => res.json())
+              .then((data) => setMenu(data._embedded.products))
+              .catch((error) => console.log(error));
+          }
+
+          if (payload.order == "DESC") {
+            fetch("http://localhost:8080/product/search/findByOrderByPriceDesc")
+              .then((res) => res.json())
+              .then((data) => setMenu(data._embedded.products))
+              .catch((error) => console.log(error));
+          }
+          break;
+        default:
+          console.log("Invalid argument given to fetchMenu");
+      }
+    } else {
+      fetch("http://localhost:8080/products")
+        .then((res) => res.json())
+        .then((data) => setMenu(data));
+    }
   };
 
   const fetchCategories = () => {
@@ -32,6 +62,19 @@ function Menu() {
       {/* Categories */}
 
       <h5 onClick={() => fetchMenu()}>All menu</h5>
+      <h5 onClick={() => fetchMenu("BETWEEN", { sp: 500, ep: 1000 })}>
+        500-1000
+      </h5>
+      <h5 onClick={() => fetchMenu("BETWEEN", { sp: 1000, ep: 2000 })}>
+        1000-2000
+      </h5>
+      <h5 onClick={() => fetchMenu("SORT-BY-PRICE", { order: "ASC" })}>
+        Sort By price-low to high
+      </h5>
+      <h5 onClick={() => fetchMenu("SORT-BY-PRICE", { order: "DESC" })}>
+        Sort By price-high to low
+      </h5>
+
       <div className="container">
         <div className="row">
           {categories &&

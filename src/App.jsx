@@ -7,6 +7,7 @@ import Layout from "./components/common/Layout";
 import Home from "./components/Home";
 import Menu from "./components/menu/Menu";
 import Register from "./components/user/Register";
+import Login from "./components/user/Login";
 
 const routes = createBrowserRouter([
   {
@@ -16,6 +17,7 @@ const routes = createBrowserRouter([
       { index: true, element: <Home /> },
       { path: "menu", element: <Menu /> },
       { path: "register", element: <Register /> },
+      { path:"login",element:<Login/>}
     ],
   },
 ]);
