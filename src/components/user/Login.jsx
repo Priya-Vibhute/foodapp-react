@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
+import { authContext } from "./AuthContext";
 
 function Login() {
   const {
@@ -8,8 +9,22 @@ function Login() {
     formState: { errors },
   } = useForm();
 
+  const { loginUser } = useContext(authContext);
+
   const onSubmit = (data) => {
     console.log(data);
+
+    fetch("http://localhost:8080/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then((responseData) => {
+        loginUser(responseData.token,responseData.userDto)
+      });
   };
 
   return (

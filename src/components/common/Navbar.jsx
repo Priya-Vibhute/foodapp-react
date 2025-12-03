@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { authContext } from "../user/AuthContext";
 
 function Navbar() {
+  const { token, user } = useContext(authContext);
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container">
@@ -29,16 +31,30 @@ function Navbar() {
                 Menu
               </Link>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link" to={"/register"}>
-                Register
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to={"/login"}>
-                Login
-              </Link>
-            </li>
+
+            {token ? (
+              <>
+                <p>{user.name}</p>
+                <li className="nav-item">
+                  <Link className="nav-link" to={"/register"}>
+                    Logout
+                  </Link>
+                </li>
+              </>
+            ) : (
+              <>
+                <li className="nav-item">
+                  <Link className="nav-link" to={"/register"}>
+                    Register
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to={"/login"}>
+                    Login
+                  </Link>
+                </li>
+              </>
+            )}
           </ul>
         </div>
       </div>
