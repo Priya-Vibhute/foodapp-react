@@ -4,13 +4,13 @@ export const authContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem("token"));
-  const [user, setUser] = useState(localStorage.getItem("user"));
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
 
   const loginUser = (jwtToken, user) => {
     setToken(jwtToken);
     setUser(user);
     console.log("Login method called", jwtToken, user);
-    localStorage.setItem("token", token);
+    localStorage.setItem("token", jwtToken);
     localStorage.setItem("user", JSON.stringify(user));
   };
   const logOut = () => {

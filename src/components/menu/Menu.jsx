@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { authContext } from "../user/AuthContext";
 
 function Menu() {
   const [menu, setMenu] = useState(null);
   const [categories, setCategories] = useState(null);
+
+  const { token, user } = useContext(authContext);
 
   const fetchMenu = (choice, payload) => {
     if (choice) {
@@ -50,6 +53,18 @@ function Menu() {
     fetch(link)
       .then((res) => res.json())
       .then((data) => setMenu(data._embedded.products));
+  };
+
+  const addToCart = (id) => {
+    fetch(`http://localhost:8080/cart/${user.id}/add-to-cart/${id}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => res.text())
+      .then((res) => console.log(res));
   };
 
   useEffect(() => {
@@ -102,7 +117,15 @@ function Menu() {
                 />
                 <div class="card-body">
                   <h5 class="card-title">{m.name}</h5>
-                  <p class="card-text">Price {m.price}</p>
+                  <p class="card-text">
+                    Price {m.price} {m.id}
+                  </p>
+                  <button
+                    className="btn btn-primary m-3"
+                    onClick={() => addToCart(m.id)}
+                  >
+                    Add to cart
+                  </button>
                 </div>
               </div>
             </div>

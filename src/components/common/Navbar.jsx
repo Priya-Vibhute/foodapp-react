@@ -1,9 +1,16 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { authContext } from "../user/AuthContext";
 
 function Navbar() {
-  const { token, user } = useContext(authContext);
+  const { token, user, logOut } = useContext(authContext);
+
+  const navigate = useNavigate();
+
+  const logoutUser = () => {
+    logOut();
+    navigate(["/login"]);
+  };
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container">
@@ -36,8 +43,14 @@ function Navbar() {
               <>
                 <p>{user.name}</p>
                 <li className="nav-item">
-                  <Link className="nav-link" to={"/register"}>
+                  <button className="nav-link" onClick={() => logoutUser()}>
                     Logout
+                  </button>
+                </li>
+
+                <li className="nav-item">
+                  <Link className="nav-link" to={"/cart"}>
+                    Cart
                   </Link>
                 </li>
               </>

@@ -1,4 +1,3 @@
-
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
@@ -9,6 +8,7 @@ import Menu from "./components/menu/Menu";
 import Register from "./components/user/Register";
 import Login from "./components/user/Login";
 import { AuthProvider } from "./components/user/AuthContext";
+import Cart from "./components/cart/Cart";
 
 const routes = createBrowserRouter([
   {
@@ -19,6 +19,7 @@ const routes = createBrowserRouter([
       { path: "menu", element: <Menu /> },
       { path: "register", element: <Register /> },
       { path: "login", element: <Login /> },
+      { path: "cart", element: <Cart /> },
     ],
   },
 ]);
