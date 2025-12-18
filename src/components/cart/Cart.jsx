@@ -18,12 +18,26 @@ function Cart() {
       },
     })
       .then((res) => res.json())
-      .then((res) => console.log(res));
+      .then((res) => setCart(res));
   };
+
+  const totalAmount = cart.reduce((sum, item) => sum + (item.price || 0), 0);
 
   return (
     <div>
       <h1>Cart</h1>
+
+      <div className="container m-3">
+        {cart.map((p) => (
+          <div>
+            <h3>{p.name}</h3>
+            <p>Price : {p.price}</p>
+            <hr />
+          </div>
+        ))}
+
+        <h1>Total is {totalAmount}</h1>
+      </div>
     </div>
   );
 }
